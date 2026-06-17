@@ -1,3 +1,5 @@
+let previousData = [];
+
 async function loadLeaderboard() {
   const { data } = await supabaseClient
     .from("profiles")
@@ -8,33 +10,41 @@ async function loadLeaderboard() {
   const board = document.getElementById("leaderboard");
 
   board.innerHTML = `
-    <h2>🔥 Global Wrapped Leaderboard</h2>
-
+    <h2>🔥 Global Leaderboard</h2>
     <div class="grid">
-      ${data.map((u, i) => `
-        <div class="card">
-          <div>#${i + 1}</div>
-          <img src="${u.avatar}" width="50" />
-          <div>@${u.username}</div>
-          <div>⭐ ${u.stars}</div>
-          <div>📦 ${u.repos}</div>
-          <div>👥 ${u.followers}</div>
-        </div>
-      `).join("")}
+      ${data.map((u, i) => {
+        const prevIndex = previousData.findIndex(p => p.username === u.username);
+        const movedUp = prevIndex > i;
+
+        return `
+          <div class="card" style="
+            transform: ${movedUp ? 'scale(1.05)' : 'scale(1)'};
+            border: ${movedUp ? '1px solid #6366f1' : 'none'};
+            transition: 0.4s;
+          ">
+            <div>#${i + 1}</div>
+            <div>@${u.username}</div>
+            <div>⭐ ${u.stars}</div>
+            <div>👥 ${u.followers}</div>
+          </div>
+        `;
+      }).join("")}
     </div>
   `;
+
+  previousData = data;
 }
 
 function subscribeLeaderboardLive() {
   supabaseClient
     .channel("profiles-live")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "profiles" },
-      () => {
-        loadLeaderboard();
-      }
-    )
+    .on("postgres_changes", {
+      event: "*",
+      schema: "public",
+      table: "profiles"
+    }, () => {
+      loadLeaderboard();
+    })
     .subscribe();
 }
 
