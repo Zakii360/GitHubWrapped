@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GitHub Wrapped</title>
 
   <link rel="stylesheet" href="style.css" />
 
+  <!-- Supabase v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- confetti -->
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
+    <h1>GitHub Wrapped</h1>
 
-  <h1>GitHub Wrapped</h1>
+    <div class="input-row">
+      <input id="username" placeholder="GitHub username..." />
+      <button onclick="startWrapped()">Generate</button>
+      <button onclick="loadLeaderboard()">🏆 Leaderboard</button>
+    </div>
 
-  <input id="username" placeholder="GitHub username" />
-  <button onclick="startWrapped()">Start Wrapped</button>
+    <!-- WRAPPED SLIDES -->
+    <div id="slides"></div>
 
-  <div id="slides"></div>
+    <!-- LEADERBOARD -->
+    <div id="leaderboard"></div>
+  </div>
 
-  <div id="leaderboard"></div>
-
-</div>
-
-<script src="supabase.js"></script>
-<script src="github.js"></script>
-<script src="stats.js"></script>
-<script src="leaderboard.js"></script>
-<script src="sharecard.js"></script>
-<script src="app.js"></script>
+  <!-- SCRIPTS -->
+  <script src="supabase.js"></script>
+  <script src="github.js"></script>
+  <script src="stats.js"></script>
+  <script src="leaderboard.js"></script>
+  <script src="sharecard.js"></script>
+  <script src="app.js"></script>
 
 </body>
 </html>
