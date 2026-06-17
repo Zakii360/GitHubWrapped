@@ -1,4 +1,4 @@
-let previousData = [];
+let prev = [];
 
 async function loadLeaderboard() {
   const { data } = await supabaseClient
@@ -10,18 +10,18 @@ async function loadLeaderboard() {
   const board = document.getElementById("leaderboard");
 
   board.innerHTML = `
-    <h2>🔥 Global Leaderboard</h2>
+    <h2>🏆 Global Leaderboard</h2>
+
     <div class="grid">
       ${data.map((u, i) => {
-        const prevIndex = previousData.findIndex(p => p.username === u.username);
-        const movedUp = prevIndex > i;
+        const oldIndex = prev.findIndex(p => p.username === u.username);
+        const movedUp = oldIndex > i;
 
         return `
           <div class="card" style="
-            transform: ${movedUp ? 'scale(1.05)' : 'scale(1)'};
-            border: ${movedUp ? '1px solid #6366f1' : 'none'};
-            transition: 0.4s;
+            border:${movedUp ? '1px solid #6366f1' : 'none'};
           ">
+            <img src="${u.avatar || ''}" width="50" />
             <div>#${i + 1}</div>
             <div>@${u.username}</div>
             <div>⭐ ${u.stars}</div>
@@ -32,7 +32,7 @@ async function loadLeaderboard() {
     </div>
   `;
 
-  previousData = data;
+  prev = data;
 }
 
 function subscribeLeaderboardLive() {
