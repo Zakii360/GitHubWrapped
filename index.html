@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GitHub Wrapped</title>
+
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Supabase CDN (required) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-<h1>GitHub Wrapped</h1>
+  <div class="container">
+    <h1>GitHub Wrapped</h1>
 
-<input id="username" placeholder="GitHub username" />
-<button onclick="generateWrapped()">Generate</button>
+    <input id="username" placeholder="GitHub username" />
+    <button onclick="generateWrapped()">Generate</button>
+    <button onclick="loadLeaderboard()">Leaderboard</button>
 
-<button onclick="loadLeaderboard()">Leaderboard</button>
+    <!-- MAIN WRAPPED OUTPUT -->
+    <div id="output"></div>
 
-<div id="output"></div>
-<div id="leaderboard"></div>
+    <!-- LEADERBOARD -->
+    <div id="leaderboard"></div>
+  </div>
 
-<script src="supabase.js"></script>
-<script src="github.js"></script>
-<script src="stats.js"></script>
-<script src="leaderboard.js"></script>
-<script src="sharecard.js"></script>
-<script src="app.js"></script>
+  <!-- CORE SCRIPTS (order matters) -->
+
+  <script src="supabase.js"></script>
+  <script src="github.js"></script>
+  <script src="stats.js"></script>
+  <script src="leaderboard.js"></script>
+  <script src="sharecard.js"></script>
+  <script src="app.js"></script>
 
 </body>
 </html>
