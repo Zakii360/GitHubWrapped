@@ -1,22 +1,19 @@
 function buildStats(user, repos) {
-  const languages = {};
+  const lang = {};
 
-  repos.forEach(repo => {
-    if (repo.language) {
-      languages[repo.language] = (languages[repo.language] || 0) + 1;
-    }
+  repos.forEach(r => {
+    if (r.language) lang[r.language] = (lang[r.language] || 0) + 1;
   });
 
   const topLanguage =
-    Object.entries(languages).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
-
-  const stars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
+    Object.entries(lang).sort((a,b)=>b[1]-a[1])[0]?.[0] || "N/A";
 
   return {
     username: user.login,
-    followers: user.followers,
+    avatar: user.avatar_url,
     repos: repos.length,
-    stars,
+    stars: repos.reduce((a,r)=>a+r.stargazers_count,0),
+    followers: user.followers,
     topLanguage
   };
 }
