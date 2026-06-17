@@ -59,9 +59,9 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* SLIDES */
 #slides {
   margin-top: 30px;
+  transition: 0.2s ease;
 }
 
 .slide {
@@ -70,9 +70,14 @@ button:hover {
   border-radius: 16px;
   background: rgba(255,255,255,0.06);
   backdrop-filter: blur(14px);
+  animation: slideIn 0.25s ease;
 }
 
-/* GRID */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -80,7 +85,6 @@ button:hover {
   margin-top: 30px;
 }
 
-/* CARD */
 .card {
   background: rgba(255,255,255,0.06);
   padding: 16px;
