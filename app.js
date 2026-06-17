@@ -12,7 +12,7 @@ async function generateWrapped() {
 
     output.innerHTML = `
       <div class="fade-in">
-        <div class="title">@${stats.username} Wrapped</div>
+        <div class="title">@${stats.username}'s Wrapped</div>
 
         <div class="grid">
           <div class="card">
