@@ -4,40 +4,34 @@ async function generateWrapped() {
 
   output.innerHTML = "Loading...";
 
-  try {
-    const user = await getUser(username);
-    const repos = await getRepos(username);
+  const user = await getUser(username);
+  const repos = await getRepos(username);
+  const stats = buildStats(user, repos);
 
-    const stats = buildStats(user, repos);
+  // save to leaderboard
+  await supabaseClient.from("leaderboard").upsert({
+    username: stats.username,
+    stars: stats.stars,
+    followers: stats.followers,
+    repos: stats.repos,
+    updated_at: new Date()
+  });
 
-    output.innerHTML = `
-      <div class="fade-in">
-        <div class="title">@${stats.username}'s Wrapped</div>
+  output.innerHTML = `
+    <div class="grid">
 
-        <div class="grid">
-          <div class="card">
-            <h3>Repos</h3>
-            <p>${stats.repos}</p>
-          </div>
-
-          <div class="card">
-            <h3>Stars</h3>
-            <p>${stats.stars}</p>
-          </div>
-
-          <div class="card">
-            <h3>Followers</h3>
-            <p>${stats.followers}</p>
-          </div>
-
-          <div class="card">
-            <h3>Top Language</h3>
-            <p>${stats.topLanguage}</p>
-          </div>
-        </div>
+      <div class="card">
+        <img src="${stats.avatar}" width="80"/>
+        <h3>@${stats.username}</h3>
       </div>
-    `;
-  } catch (err) {
-    output.innerHTML = `<div class="card">Error loading data</div>`;
-  }
+
+      <div class="card">⭐ ${stats.stars}</div>
+      <div class="card">📦 ${stats.repos}</div>
+      <div class="card">👥 ${stats.followers}</div>
+      <div class="card">💻 ${stats.topLanguage}</div>
+
+    </div>
+
+    <button onclick="downloadCard()">Download Card</button>
+  `;
 }
