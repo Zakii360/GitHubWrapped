@@ -1,5 +1,7 @@
 let slides = [];
 let index = 0;
+let aiLabel = "Dev Human";
+let isAnimating = false;
 
 async function startWrapped() {
   const username = document.getElementById("username").value;
@@ -8,10 +10,24 @@ async function startWrapped() {
   const repos = await getRepos(username);
   const stats = buildStats(user, repos);
 
- 
+  // AI CALL (FIXED SAFE)
+  try {
+    const ai = await fetch("https://tvxugmumfvgnvjacwwfz.supabase.co/functions/v1/wrapped-ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ stats })
+    });
+
+    const aiData = await ai.json();
+    aiLabel = aiData?.result || "Dev Human";
+  } catch (e) {
+    aiLabel = "Dev Human";
+  }
+
+  // SAVE TO SUPABASE
   await supabaseClient.from("profiles").upsert({
     username: stats.username,
-    avatar: stats.avatar,   // so I fixed the avatar thing (I forgot to put this lol)
+    avatar: stats.avatar,
     stars: stats.stars,
     repos: stats.repos,
     followers: stats.followers,
@@ -21,7 +37,6 @@ async function startWrapped() {
   buildSlides(stats);
   showSlide(0);
 
-  // click to continue (TikTok feel if you will [I don't actually have tiktok, I just seen vids of it])
   document.body.onclick = nextSlide;
 }
 
@@ -32,24 +47,35 @@ function buildSlides(stats) {
     `⭐ Stars: ${stats.stars}`,
     `👥 Followers: ${stats.followers}`,
     `💻 Top Language: ${stats.topLanguage}`,
+    `🧠 You are: ${aiLabel}`,
     `🔥 Wrapped Complete`
   ];
 }
 
 function showSlide(i) {
-  document.getElementById("slides").innerHTML = `
-    <div class="slide">${slides[i]}</div>
-  `;
+  document.getElementById("slides").innerHTML =
+    `<div class="slide">${slides[i]}</div>`;
 }
 
 function nextSlide() {
+  if (isAnimating) return;
+  isAnimating = true;
+
   index++;
 
   if (index >= slides.length) {
     index = 0;
     confetti();
+    isAnimating = false;
     return;
   }
 
-  showSlide(index);
+  const el = document.getElementById("slides");
+  el.style.opacity = 0;
+
+  setTimeout(() => {
+    showSlide(index);
+    el.style.opacity = 1;
+    isAnimating = false;
+  }, 180);
 }
