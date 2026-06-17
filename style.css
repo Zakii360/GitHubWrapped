@@ -7,15 +7,14 @@ body {
   color: white;
 }
 
-/* soft background glow (NOT crazy) */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(99,102,241,0.25), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(6,182,212,0.20), transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(168,85,247,0.20), transparent 40%);
+    radial-gradient(circle at 20% 20%, rgba(99,102,241,0.2), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(6,182,212,0.15), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(168,85,247,0.15), transparent 40%);
   filter: blur(60px);
   z-index: -1;
 }
@@ -30,22 +29,27 @@ body::before {
 h1 {
   font-size: 40px;
   font-weight: 800;
-  margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
 input {
-  padding: 12px 14px;
+  padding: 12px;
   border-radius: 10px;
   border: none;
   width: 260px;
-  outline: none;
 }
 
 button {
   padding: 12px 14px;
   border-radius: 10px;
   border: none;
-  margin-left: 8px;
   background: #6366f1;
   color: white;
   cursor: pointer;
@@ -55,26 +59,20 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* SLIDES (tiktok style) */
+/* SLIDES */
 #slides {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .slide {
   font-size: 26px;
-  padding: 60px 30px;
-  border-radius: 18px;
+  padding: 50px;
+  border-radius: 16px;
   background: rgba(255,255,255,0.06);
   backdrop-filter: blur(14px);
-  animation: fade 0.25s ease;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* leaderboard cards */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -82,13 +80,19 @@ button:hover {
   margin-top: 30px;
 }
 
+/* CARD */
 .card {
   background: rgba(255,255,255,0.06);
   padding: 16px;
   border-radius: 14px;
-  transition: 0.25s;
+  transition: 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
+}
+
+.card img {
+  border-radius: 50%;
+  margin-bottom: 10px;
 }
