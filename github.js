@@ -1,9 +1,11 @@
 const BASE = "https://api.github.com";
 
 async function getUser(username) {
-  return (await fetch(`${BASE}/users/${username}`)).json();
+  const res = await fetch(`${BASE}/users/${username}`);
+  return res.json();
 }
 
 async function getRepos(username) {
-  return (await fetch(`${BASE}/users/${username}/repos?per_page=100`)).json();
+  const res = await fetch(`${BASE}/users/${username}/repos?per_page=100`);
+  return res.json();
 }
