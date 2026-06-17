@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
   <title>GitHub Wrapped</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>GitHub Wrapped</h1>
+<h1>GitHub Wrapped</h1>
 
-    <input id="username" placeholder="GitHub username" />
-    <button onclick="generateWrapped()">Generate</button>
+<input id="username" placeholder="GitHub username" />
+<button onclick="generateWrapped()">Generate</button>
 
-    <div id="output"></div>
-  </div>
+<button onclick="loadLeaderboard()">Leaderboard</button>
 
-  <script src="github.js"></script>
-  <script src="stats.js"></script>
-  <script src="app.js"></script>
+<div id="output"></div>
+<div id="leaderboard"></div>
+
+<script src="supabase.js"></script>
+<script src="github.js"></script>
+<script src="stats.js"></script>
+<script src="leaderboard.js"></script>
+<script src="sharecard.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
